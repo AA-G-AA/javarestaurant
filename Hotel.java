@@ -139,7 +139,6 @@ public class Hotel implements Serializable {
         }
         Booking();
     }
-
     private void Booking() {
         boolean ct = true;
         while (ct) {
@@ -289,7 +288,6 @@ public class Hotel implements Serializable {
                         break;
                     }
                     Food.start();
-
                     Food.getOrder(room); // 调用 getOrder 方法并将订单添加到对应房间的订单列表中
 
                     System.out.println("点餐完成");
@@ -356,7 +354,7 @@ public class Hotel implements Serializable {
                         for (FoodOrder order : orders) {
                             ordercount+=order.getFoodItem().getPrice()*order.getCount();
                             System.out.println(order.getFoodItem().getName()+" "+"\t" +
-                                    "x"+order.count+" "+"\t"+(order.getFoodItem().getPrice()*order.getCount()));
+                                    "x" + order.getCount() + " " + "\t" + (order.getFoodItem().getPrice() * order.getCount()));
                         }
                     }
                     System.out.println("==========================");

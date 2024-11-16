@@ -1,6 +1,9 @@
 package RestaurantSys;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Food {
     private static Map<Integer, FoodItem> menu = new HashMap<>();
@@ -108,8 +111,8 @@ class FoodItem{
     }
 }
 class FoodOrder{
-    FoodItem foodItem;
-    int count;
+    private FoodItem foodItem;
+    private int count;
 
     public FoodOrder() {
     }

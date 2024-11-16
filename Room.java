@@ -14,7 +14,7 @@ abstract class Room implements Serializable {
     protected double pricePerDay;
     protected boolean occupied;
     protected List<Customer> customers;
-    private List<FoodOrder> foodOrders; // 添加订单列表
+    protected List<FoodOrder> foodOrders; // 添加订单列表
     
 
     public Room(int roomNumber,String type, boolean hasAC, boolean hasBreakfast, double pricePerDay) {
