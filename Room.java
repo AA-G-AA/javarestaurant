@@ -99,7 +99,8 @@ abstract class Room implements Serializable {
 
 
 }
-class Holder {
+
+class Holder implements Serializable {
     private List<RoomType> roomTypes;
 
     public Holder() {
@@ -121,7 +122,7 @@ class Holder {
 
 }
 
-class RoomType {
+class RoomType implements Serializable {
     private String type;
     private boolean hasAC;
     private boolean hasBreakfast;
@@ -158,13 +159,13 @@ class RoomType {
     }
 }
 
-class SingleRoom extends Room {
+class SingleRoom extends Room implements Serializable {
     public SingleRoom(int roomNumber, RoomType roomType) {
         super(roomNumber, roomType.getType(), roomType.isHasAC(), roomType.isHasBreakfast(), roomType.getPricePerDay());
     }
 }
 
-class DoubleRoom extends Room {
+class DoubleRoom extends Room implements Serializable {
     public DoubleRoom(int roomNumber, RoomType roomType) {
         super(roomNumber, roomType.getType(), roomType.isHasAC(), roomType.isHasBreakfast(), roomType.getPricePerDay());
     }

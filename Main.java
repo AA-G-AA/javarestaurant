@@ -4,7 +4,8 @@ import java.util.Scanner;
 public class Main {
     private static Hotel hotel;
     public static void main(String[] args) {
-        hotel = new Hotel();
+        hotel = Hotel.loadFromFile();
+
         while(true){
             Menu.Mainshow();
             Scanner sc=new Scanner(System.in);

@@ -1,11 +1,12 @@
 package RestaurantSys;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Food {
+public class Food implements Serializable {
     private static Map<Integer, FoodItem> menu = new HashMap<>();
 
     static {
@@ -72,7 +73,8 @@ public class Food {
         }
     }
 }
-class FoodItem{
+
+class FoodItem implements Serializable {
 
     private String name;
     private int price;
@@ -110,7 +112,8 @@ class FoodItem{
         return name+" "+"\t"+"价格:  "+price+" ¥";
     }
 }
-class FoodOrder{
+
+class FoodOrder implements Serializable {
     private FoodItem foodItem;
     private int count;
 

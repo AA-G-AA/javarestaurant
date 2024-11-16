@@ -1,13 +1,12 @@
 package RestaurantSys;
 
 
-
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 
 public class Hotel implements Serializable {
-
+    private static final String SAVE_FILE = "hotel_data.ser";
     private List<Room> rooms;
     private Holder holder;
     private Map<String, List<Room>> roomsByType = new HashMap<>();
@@ -93,19 +92,6 @@ public class Hotel implements Serializable {
                     continue;
             }
 
-            /*System.out.println("房间类型: " + roomTypeName);
-            List<Integer> roomNumbersByType = getRoomNumbersByType(roomTypeName);
-            roomNumbersByType.stream().forEach(s-> System.out.print(s+" "));
-            System.out.println("\n输入你需要查找的房间号:");
-            int roomNumber;
-            // 添加异常处理
-            try {
-                roomNumber = sc.nextInt();
-            } catch (Exception e) {
-                System.out.println("请输入有效的房间号。");
-                sc.next(); // 清除错误输入
-                continue; // 继续下次循环
-            }*/
             List<Room> roomlist = roomsByType.get(roomTypeName);
             if (roomlist != null && !roomlist.isEmpty()) {
                     Room room = roomlist.get(0);
@@ -139,6 +125,81 @@ public class Hotel implements Serializable {
         }
         Booking();
     }
+
+    public static Hotel loadFromFile() {
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(SAVE_FILE))) {
+            //System.out.println("导入数据成功");
+            return (Hotel) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return new Hotel();
+        }
+    }
+
+    public void orderMeal() {
+        Scanner sc = new Scanner(System.in);
+        boolean ct = true;
+        while (ct) {
+            System.out.println("输入房间号:");
+            int num;
+            try {
+                num = Integer.parseInt(sc.nextLine());
+
+            } catch (NumberFormatException N) {
+                System.out.println("请输入正确房间号");
+                continue; // 继续下次循环
+            } catch (Exception e) {
+                System.out.println("发生错误，请重试。");
+                continue;
+            }
+            boolean found = false;
+            for (Room room : rooms) {
+                if (room.getRoomNumber() == num) {
+                    found = true;
+                    if (!room.occupied) {
+                        System.out.println("此房未预定,请重新输入房间号");
+                        break;
+                    }
+                    if (room.getType().equals("高级单人间") || room.getType().equals("高级双人间")) {
+                        System.out.println("此房间无早餐选择");
+                        break;
+                    }
+                    Food.start();
+                    Food.getOrder(room); // 调用 getOrder 方法并将订单添加到对应房间的订单列表中
+
+                    System.out.println("点餐完成");
+                    System.out.println("还需要继续点餐吗? y/n");
+
+                    String s = sc.next();
+                    if (!s.equalsIgnoreCase("y")) {
+                        ct = false;
+                    }
+                    sc.nextLine(); // 清除输入缓冲区
+                    break; // 找到预定房间后跳出循环
+                }
+            }
+            if (!found) {
+                System.out.println("未找到房间号: " + num);
+                break;
+            }
+        }
+    }
+
+    private List<Integer> getRoomNumbersAvailableByType(String roomTypeName) {
+        List<Integer> roomNumbers = new ArrayList<>();
+        List<Room> roomsOfType = roomsByType.get(roomTypeName);
+
+        if (roomsOfType != null) {
+            for (Room room : roomsOfType) {
+                if (!room.isOccupied()) {
+                    roomNumbers.add(room.getRoomNumber());
+                }
+            }
+        }
+
+        return roomNumbers;
+    }
+
     private void Booking() {
         boolean ct = true;
         while (ct) {
@@ -206,6 +267,7 @@ public class Hotel implements Serializable {
                                 room.addCustomer(cus);
                                 room.setOccupied(true);
                                 System.out.println("房间 " + roomnum + " 预定成功");
+                                saveToFile();
                             } else {
                                 System.out.println("房间 " + roomnum + " 已被预定");
                             }
@@ -238,6 +300,7 @@ public class Hotel implements Serializable {
                                 room.addCustomer(customer2);
                                 room.setOccupied(true);
                                 System.out.println("房间 " + roomnum + " 预定成功");
+                                saveToFile();
                             } else {
                                 System.out.println("房间 " + roomnum + " 已被预定");
                             }
@@ -258,69 +321,6 @@ public class Hotel implements Serializable {
                 ct = false;
             }
         }
-    }
-    public void orderMeal(){
-        Scanner sc=new Scanner(System.in);
-        boolean ct=true;
-        while(ct) {
-            System.out.println("输入房间号:");
-            int num;
-            try {
-                num = Integer.parseInt(sc.nextLine());
-
-            } catch (NumberFormatException N) {
-                System.out.println("请输入正确房间号");
-                continue; // 继续下次循环
-            } catch (Exception e) {
-                System.out.println("发生错误，请重试。");
-                continue;
-            }
-            boolean found = false;
-            for (Room room : rooms) {
-                if (room.getRoomNumber() == num) {
-                    found = true;
-                    if (!room.occupied){
-                        System.out.println("此房未预定,请重新输入房间号");
-                        break;
-                    }
-                    if (room.getType().equals("高级单人间")||room.getType().equals("高级双人间")){
-                        System.out.println("此房间无早餐选择");
-                        break;
-                    }
-                    Food.start();
-                    Food.getOrder(room); // 调用 getOrder 方法并将订单添加到对应房间的订单列表中
-
-                    System.out.println("点餐完成");
-                    System.out.println("还需要继续点餐吗? y/n");
-
-                    String s = sc.next();
-                    if (!s.equalsIgnoreCase("y")) {
-                        ct = false;
-                    }
-                    sc.nextLine(); // 清除输入缓冲区
-                    break; // 找到预定房间后跳出循环
-                }
-            }
-            if (!found) {
-                System.out.println("未找到房间号: " + num);
-                break;
-            }
-        }
-    }
-
-    private List<Integer> getRoomNumbersAvailableByType(String roomTypeName) {
-        List<Integer> roomNumbers = new ArrayList<>();
-        List<Room> roomsOfType = roomsByType.get(roomTypeName);
-
-        if (roomsOfType != null) {
-            for (Room room : roomsOfType) {
-                if (!room.isOccupied()) {
-                    roomNumbers.add(room.getRoomNumber());
-                }
-            }
-        }
-
-        return roomNumbers;
     }
 
     public void checkout() {
@@ -361,9 +361,20 @@ public class Hotel implements Serializable {
                     System.out.println("总消费:"+" "+(ordercount+pricePerDay));
                     System.out.println("--------------------");
                     room.setOccupied(false);
+                    saveToFile();
                     System.out.println("退房成功");
                 }
             }
+        }
+    }
+
+    private void saveToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(SAVE_FILE))) {
+            oos.writeObject(this);
+            //System.out.println("保存成功");
+        } catch (IOException e) {
+            System.err.println("保存失败: " + e.getMessage());
         }
     }
 }
