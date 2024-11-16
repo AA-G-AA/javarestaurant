@@ -7,6 +7,5 @@
 3）应该使用Java 的Serializable（序列化）接口实现主要类的设计；
 
 uml类图:
-![image](https://github.com/user-attachments/assets/23d578ac-3808-49e1-9acb-f79173ff1d7e)
 
 ![Main](https://github.com/user-attachments/assets/9053fe39-556c-473a-a159-afa6742ecf82)
