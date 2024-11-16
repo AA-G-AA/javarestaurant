@@ -13,10 +13,14 @@
 
 tip：
 1）各个类之间进行良好的耦合和内聚。设计以下几个主要的功能类： Hotel、Food、Main，以及Holder类用于保存房间类型，SingleRoom和DoubleRoom类用于区分两种类型的房间；
+
 2）通过Hotel类和Food类中的方法设计实现酒店房间预订、餐饮预订、结账模拟；Main主类中实现程序主菜单，其他类与Hotel 类和 Food 类通信与联系；
+
 3）使用Java 的Serializable（序列化）接口实现主要类的设计；
+
 4）酒店预定与退房功能的结果利用序列化,保存成文件，在相关类中可读写该文件；
 
 
 uml类图:
+
 ![Main](https://github.com/user-attachments/assets/48cf6d57-10e6-4e42-b1ad-7561c0f46eb9)
