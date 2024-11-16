@@ -9,7 +9,7 @@ import java.util.*;
 public class Hotel implements Serializable {
 
     private List<Room> rooms;
-    private Holder holder; // 引用 Holder 类
+    private Holder holder;
     private Map<String, List<Room>> roomsByType = new HashMap<>();
 
     public Hotel() {
@@ -123,7 +123,6 @@ public class Hotel implements Serializable {
         }
     }
 
-
     public void ShowAvailableRoom(){
         System.out.println("空闲房间:");
         for (Room room : rooms) {
@@ -140,7 +139,8 @@ public class Hotel implements Serializable {
         }
         Booking();
     }
-    public void Booking() {
+
+    private void Booking() {
         boolean ct = true;
         while (ct) {
             System.out.println("选择你预定的房间类型:(1:豪华单人间;2:高级单人间;3:豪华双人间;4:高级双人间)");
