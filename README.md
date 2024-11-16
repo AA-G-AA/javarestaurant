@@ -5,3 +5,5 @@
 1）充分理解Java面向对象方法的概念，各个类之间进行良好的耦合和内聚。设计以下几个主要的功能类： Hotel、Food、Main，以及Holder类用于保存房间类型，SingleRoom和DoubleRoom类用于区分两种类型的房间；
 2）通过Hotel类和Food类中的方法设计实现酒店房间预订、餐饮预订、结账模拟；Main主类中实现程序主菜单，其他类与Hotel 类和 Food 类通信与联系；
 3）应该使用Java 的Serializable（序列化）接口实现主要类的设计；
+
+![image](https://github.com/user-attachments/assets/542bbbfe-4197-4dae-8459-22a7a7038b77)
